@@ -1,0 +1,100 @@
+﻿<Window x:Class="HQ3dmConverter.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="HQ 3DM Converter" Height="500" Width="700" MinHeight="450" MinWidth="600">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="PrimaryButton">
+            <Setter Property="Background" Value="#0078D4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="16,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#106EBE"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#CCCCCC"/>
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="SecondaryButton" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="Background" Value="#E0E0E0"/>
+            <Setter Property="Foreground" Value="#333333"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="HQ 3DM Converter" FontSize="28" FontWeight="Bold" Foreground="#1A1A1A"/>
+            <TextBlock Text="Convert Rhino 8+ (.3dm) files to Rhino 7 format" FontSize="14" Foreground="#666666" Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <!-- Input File -->
+        <GroupBox Grid.Row="1" Header="Input File" Margin="0,0,0,12" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="InputPathTextBox" Grid.Column="0" Height="36" VerticalContentAlignment="Center" 
+                         Padding="8,0" FontSize="13" IsReadOnly="True" Background="#FAFAFA"
+                         ToolTip="Path to the Rhino 8+ .3dm file to convert"/>
+                <Button x:Name="BrowseInputButton" Grid.Column="1" Content="Browse..." Style="{StaticResource SecondaryButton}" 
+                        Margin="8,0,0,0" Click="BrowseInputButton_Click"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Output File -->
+        <GroupBox Grid.Row="2" Header="Output File (optional)" Margin="0,0,0,12" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="OutputPathTextBox" Grid.Column="0" Height="36" VerticalContentAlignment="Center" 
+                         Padding="8,0" FontSize="13" Background="White"
+                         ToolTip="Leave empty to auto-generate name (adds _R7 suffix)"/>
+                <Button x:Name="BrowseOutputButton" Grid.Column="1" Content="Browse..." Style="{StaticResource SecondaryButton}" 
+                        Margin="8,0,0,0" Click="BrowseOutputButton_Click"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Results / Log -->
+        <GroupBox Grid.Row="3" Header="Results" Padding="12" Margin="0,0,0,12">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <TextBlock x:Name="ResultsTextBlock" FontFamily="Consolas,Monospace" FontSize="12" 
+                           TextWrapping="Wrap" Text="Select a .3dm file and click Convert to begin." 
+                           Foreground="#888888"/>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Progress + Convert Button -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <ProgressBar x:Name="ProgressBar" Width="200" Height="20" Visibility="Collapsed" IsIndeterminate="True" Margin="0,0,12,0"/>
+            <Button x:Name="ConvertButton" Content="Convert" Style="{StaticResource PrimaryButton}" 
+                    MinWidth="120" Click="ConvertButton_Click" IsEnabled="False"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -14,4 +14,11 @@ dotnet publish "$Root\src\HQ3dmConverter.Cli\HQ3dmConverter.Cli.csproj" `
   -p:PublishSingleFile=false `
   -o "$Dist\cli"
 
+dotnet publish "$Root\src\HQ3dmConverter.Wpf\HQ3dmConverter.Wpf.csproj" `
+  -c Release -r win-x64 --self-contained true `
+  -p:PublishSingleFile=false `
+  -o "$Dist\wpf"
+
 Write-Host "Published to $Dist"
+Write-Host "  CLI:  $Dist\cli\HQ3dmConverter.Cli.exe"
+Write-Host "  WPF:  $Dist\wpf\HQ3dmConverter.Wpf.exe"
