@@ -9,4 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HQ3dmConverter.Core\HQ3dmConverter.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

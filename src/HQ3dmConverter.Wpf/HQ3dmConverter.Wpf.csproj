@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\HQ3dmConverter.Core\HQ3dmConverter.Core.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="README.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
