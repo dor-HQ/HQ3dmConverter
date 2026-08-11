@@ -4,7 +4,7 @@ namespace HQ3dmConverter.Core;
 
 public sealed class ThreeDmConverter
 {
-    public const int TargetArchiveVersion = 7;
+    public const int TargetArchiveVersion = 70;
 
     public ConversionResult ConvertToRhino7(string inputPath, string? outputPath = null)
     {
@@ -38,7 +38,7 @@ public sealed class ThreeDmConverter
             {
                 return new ConversionResult(
                     ConversionStatus.Skipped, fullInput, null, sourceSummary, null,
-                    new[] { $"File is already Rhino {sourceSummary.ArchiveVersion} compatible." },
+                    new[] { $"File is already Rhino {sourceSummary.ArchiveVersion / 10} compatible." },
                     Array.Empty<string>(), readLog, null);
             }
 
