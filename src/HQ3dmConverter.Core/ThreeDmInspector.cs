@@ -22,9 +22,9 @@ public sealed class ThreeDmInspector
             FileSizeBytes: new FileInfo(path).Length,
             ArchiveVersion: model.ArchiveVersion,
             ObjectCount: model.Objects.Count,
-            LayerCount: model.Layers.Count,
+            LayerCount: model.AllLayers.Count,
             MaterialCount: model.AllMaterials.Count,
-            InstanceDefinitionCount: model.InstanceDefinitions.Count,
+            InstanceDefinitionCount: model.AllInstanceDefinitions.Count,
             UnitSystem: model.Settings.ModelUnitSystem.ToString());
     }
 }

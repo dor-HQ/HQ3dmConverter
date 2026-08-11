@@ -19,7 +19,7 @@ The original source is never intentionally overwritten.
 
 ## Dependency
 
-- .NET 8
+- .NET 7
 - `Rhino3dm` NuGet package `8.32.0`
 
 Rhino3dm is designed to work independently of Rhino. No Rhino 8 installation or Rhino license is required by this project.
