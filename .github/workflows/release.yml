@@ -1,0 +1,63 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Restore
+        run: dotnet restore HQ3dmConverter.sln
+
+      - name: Build
+        run: dotnet build HQ3dmConverter.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test HQ3dmConverter.sln -c Release --no-build
+
+      - name: Publish CLI
+        run: |
+          dotnet publish src/HQ3dmConverter.Cli/HQ3dmConverter.Cli.csproj `
+            -c Release -r win-x64 --self-contained true `
+            -p:PublishSingleFile=false `
+            -o dist/cli
+
+      - name: Publish WPF
+        run: |
+          dotnet publish src/HQ3dmConverter.Wpf/HQ3dmConverter.Wpf.csproj `
+            -c Release -r win-x64 --self-contained true `
+            -p:PublishSingleFile=false `
+            -o dist/wpf
+
+      - name: Copy READMEs
+        run: |
+          Copy-Item src/HQ3dmConverter.Cli/README.md dist/cli/
+          Copy-Item src/HQ3dmConverter.Wpf/README.md dist/wpf/
+
+      - name: Create ZIP Archives
+        run: |
+          Compress-Archive -Path dist/cli/* -DestinationPath HQ3dmConverter-CLI-${{ github.ref_name }}.zip
+          Compress-Archive -Path dist/wpf/* -DestinationPath HQ3dmConverter-WPF-${{ github.ref_name }}.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            HQ3dmConverter-CLI-${{ github.ref_name }}.zip
+            HQ3dmConverter-WPF-${{ github.ref_name }}.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
